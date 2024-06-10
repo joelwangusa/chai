@@ -4,10 +4,10 @@ from typing_extensions import Annotated
 
 from typing import Union
 
-from fastapi import Depends, FastAPI, HTTPException
+from fastapi import Depends, FastAPI, HTTPException, Query
 from . import config
 from pydantic import BaseModel
-from .service import run_sequence
+from .service import run_sequence, get_chat_history
 
 
 class MsgItem(BaseModel):
@@ -34,6 +34,10 @@ class ChatRequest(BaseModel):
 class ChatResponse(BaseModel):
     response: str
 
+# Define the response model for chat history
+class ChatHistoryResponse(BaseModel):
+    chat_history: list
+
 # Endpoint to receive a new chat message
 @app.post("/chat", response_model=ChatResponse)
 def chat_endpoint(request: ChatRequest):
@@ -47,6 +51,17 @@ def chat_endpoint(request: ChatRequest):
         return ChatResponse(response=result["response"])
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+
+# Endpoint to get chat history with pagination
+@app.get("/chat_history", response_model=ChatHistoryResponse)
+def chat_history_endpoint(page: int = Query(0, ge=0), size: int = Query(10, gt=0)):
+    try:
+        history = get_chat_history(page, size)
+        return ChatHistoryResponse(chat_history=history)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    
 
 if __name__ == "__main__":
     import uvicorn

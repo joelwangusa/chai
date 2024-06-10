@@ -34,6 +34,9 @@ prompt_template = PromptTemplate(
 )
 
 # Initialize in-memory chat history
+# We will save it into database in the future
+# TODO - Save chat history into database and fetch it from database when needed such as most recent 10 messages
+
 chat_history = []
 
 # Function to run the sequence manually
@@ -59,3 +62,10 @@ def run_sequence(inputs):
     # Append bot response to chat history
     chat_history.append({"sender": BOT_NAME, "message": response})
     return {"response": response}
+
+
+# Function to get paginated chat history with simple pagination
+def get_chat_history(page: int, size: int):
+    start = page * size
+    end = start + size
+    return chat_history[start:end]
