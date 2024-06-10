@@ -17,7 +17,7 @@ class CustomModelLLM(BaseLLM):
 
     @property
     def _llm_type(self) -> str:
-        return "custom_model"
+        return "chai_model"
 
     def _generate(self, prompt: str, stop: list = None):
         headers = {'Authorization': f'Bearer {self.api_key}'}
