@@ -8,3 +8,6 @@
 - deploy front end to Vercel platform
 - improve the UI/UX
 - use database(postgres) to store the chat history
+
+### Demo
+![image](chai_example.png)
