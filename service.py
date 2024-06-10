@@ -3,8 +3,8 @@ from . import model
 from langchain.prompts import PromptTemplate
 
 # Define constants
-USER_NAME = "User"
-BOT_NAME = "Bot"
+USER_NAME = "Joel Wang"
+BOT_NAME = "Chai Bot"
 MEMORY = "I am Bot, and this is my mind."
 
 # Define the configuration model for inputs
