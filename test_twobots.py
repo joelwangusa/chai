@@ -40,4 +40,4 @@ def test_twobots():
         time.sleep(1)
 
 if __name__ == "__main__":
-    test_bot_conversation()
+    test_twobots()
