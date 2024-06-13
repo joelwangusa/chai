@@ -20,6 +20,7 @@ config = model.CustomModelConfig(
     bot_name=BOT_NAME,
     memory=MEMORY
 )
+
 model_instance = model.CustomModelLLM(config=config)
 
 # Define the prompt template
@@ -37,6 +38,7 @@ prompt_template = PromptTemplate(
 # We will save it into database in the future
 # TODO - Save chat history into database and fetch it from database when needed such as most recent 10 messages
 
+# TODO: mutiple user, hashtable
 chat_history = []
 
 # Function to run the sequence manually

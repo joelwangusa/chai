@@ -9,22 +9,11 @@ from . import config
 from pydantic import BaseModel
 from .service import run_sequence, get_chat_history
 
-
-class MsgItem(BaseModel):
-    message: str
-
 app = FastAPI()
 
 @lru_cache
 def get_settings():
     return config.Settings()
-
-@app.get("/info")
-async def info(settings: Annotated[config.Settings, Depends(get_settings)]):
-    return {
-        "app_name": settings.app_name,
-        "chai_api_url": settings.chai_api_url
-    }
 
 # Define the request model
 class ChatRequest(BaseModel):
