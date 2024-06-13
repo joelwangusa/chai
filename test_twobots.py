@@ -14,8 +14,8 @@ client = TestClient(app)
 
 def test_twobots():
     # Initial messages
-    bot1_message = "Hello, Ben!"
-    bot2_message = "Hello, Joel!"
+    bot1_message = "Hello, nice to meeting you, Ben!"
+    bot2_message = "Hey, nice to meeting you too, Joel!"
 
     # Number of exchanges
     exchanges = 5
