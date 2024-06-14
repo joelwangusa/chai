@@ -1,3 +1,4 @@
 .venv
 .git
 chatbot/node_modules
+bot_conversations.log
