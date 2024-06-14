@@ -26,7 +26,10 @@ export default function ChatBox() {
   const handleSendMessage = async () => {
     if (!input) return;
     try {
-      const response = await axios.post('/api/chat', { input_text: input });
+      const response = await axios.post('/api/chat', {
+        input_text: input,
+        chat_history: messages  // Include the chat history in the request
+      });
       setMessages([...messages, { sender: 'User', message: input }, { sender: 'Bot', message: response.data.response }]);
       setInput('');
     } catch (error) {
