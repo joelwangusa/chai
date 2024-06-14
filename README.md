@@ -2,6 +2,11 @@
 - Build Custom Chai Chat model with Langchain
 - Use FastAPI build interface for the front end
 - Use Next.js to create a simple/ugly chatbot
+- Chat summary when needed
+- Two bots chat with each other
+- TDD: comprehensive pytest for each API
+- Relay on front end to submit the chat history instead of backend
+- Keep backend chat history(store in memory) but can be store in database in the future
 
 
 ### TODO:
