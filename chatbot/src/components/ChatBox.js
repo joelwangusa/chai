@@ -7,6 +7,7 @@ import Message from './Message';
 export default function ChatBox() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
+  const [summary, setSummary] = useState('');
   const [page, setPage] = useState(0);
 
   useEffect(() => {
@@ -33,12 +34,27 @@ export default function ChatBox() {
     }
   };
 
+  const handleGetSummary = async () => {
+    try {
+      const response = await axios.post('/api/summary', { chat_history: messages });
+      setSummary(response.data.summary);
+    } catch (error) {
+      console.error('Error getting summary:', error);
+    }
+  };
+
   return (
     <div className="chatbox">
       <div className="messages">
         {messages.map((msg, index) => (
           <Message key={index} sender={msg.sender} message={msg.message} />
         ))}
+      </div>
+      <div className="summary-content">
+        {summary && <div className="summary"><strong>Summary:</strong> {summary}</div>}
+      </div>
+      <div className="summary">
+        <button onClick={handleGetSummary}>Get Summary</button>
       </div>
       <div className="input-container">
         <input

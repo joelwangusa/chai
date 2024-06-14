@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from . import model
 from langchain.prompts import PromptTemplate
+from gensim.summarization import summarize
 
 # Define constants
 USER_NAME = "Joel Wang"
@@ -71,3 +72,14 @@ def get_chat_history(page: int, size: int):
     start = page * size
     end = start + size
     return chat_history[start:end]
+
+
+def generate_summary(chat_history):
+    # Format chat history for the AI model prompt
+    conversation = "\n".join(f"{msg['sender']}: {msg['message']}" for msg in chat_history)
+    prompt = f"Please summarize the following conversation:\n\n{conversation}\n\nSummary:"
+    
+    # Call the AI model with the formatted prompt
+    summary_response = model_instance._call(prompt)
+    
+    return summary_response

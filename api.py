@@ -4,10 +4,10 @@ from typing_extensions import Annotated
 
 from typing import Union
 
-from fastapi import Depends, FastAPI, HTTPException, Query
+from fastapi import Depends, FastAPI, HTTPException, Query, Body
 from . import config
 from pydantic import BaseModel
-from .service import run_sequence, get_chat_history
+from .service import run_sequence, get_chat_history, generate_summary
 
 app = FastAPI()
 
@@ -25,6 +25,14 @@ class ChatResponse(BaseModel):
 
 # Define the response model for chat history
 class ChatHistoryResponse(BaseModel):
+    chat_history: list
+
+# Define the response model for conversation summary
+class SummaryResponse(BaseModel):
+    summary: str
+
+# Define the request model for summary
+class SummaryRequest(BaseModel):
     chat_history: list
 
 # Endpoint to receive a new chat message
@@ -50,7 +58,16 @@ def chat_history_endpoint(page: int = Query(0, ge=0), size: int = Query(10, gt=0
         return ChatHistoryResponse(chat_history=history)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-    
+
+
+# POST endpoint to get the summary of the conversation
+@app.post("/summary", response_model=SummaryResponse)
+def summary_endpoint(request: SummaryRequest = Body(...)):
+    try:
+        summary = generate_summary(request.chat_history)
+        return SummaryResponse(summary=summary)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 if __name__ == "__main__":
     import uvicorn
