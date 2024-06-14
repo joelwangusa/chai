@@ -73,7 +73,7 @@ def get_chat_history(page: int, size: int):
     end = start + size
     return chat_history[start:end]
 
-
+# Function to generate a summary of the conversation so far
 def generate_summary(chat_history):
     # Format chat history for the AI model prompt
     conversation = "\n".join(f"{msg['sender']}: {msg['message']}" for msg in chat_history)
